@@ -1,0 +1,5 @@
+path: C:\Users\Pooja\Desktop\pothole_detection\datasets\roboflow
+train: C:\Users\Pooja\Desktop\pothole_detection\datasets\roboflow\train\images
+val: C:\Users\Pooja\Desktop\pothole_detection\datasets\roboflow\valid\images
+names:
+- pothole
