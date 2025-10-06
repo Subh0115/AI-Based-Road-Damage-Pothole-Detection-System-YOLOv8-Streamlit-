@@ -15,12 +15,7 @@ from sample_utils.download import download_file
 from sample_utils.logger import append_detection_log
 
 
-st.set_page_config(
-	page_title="Image Detection",
-	page_icon="📷",
-	layout="centered",
-	initial_sidebar_state="expanded"
-)
+# Page config is set once in Home.py
 
 HERE = Path(__file__).parent
 ROOT = HERE.parent
