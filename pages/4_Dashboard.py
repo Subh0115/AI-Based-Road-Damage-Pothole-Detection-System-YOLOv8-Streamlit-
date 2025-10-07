@@ -116,8 +116,39 @@ else:
 
 	# Recent records table and exports
 	st.subheader("Records")
-	st.caption("Showing the latest 200 for performance; download for full dataset.")
-	preview = filtered.tail(200)
+	st.caption("Showing the latest 200 unique records; download for full dataset.")
+	# Ensure uniqueness across requested fields and include unique latitude/longitude
+	_unique_keys = [
+		"media_name",
+		"timestamp",
+		"date",
+		"timestamp_iso",
+		"source",
+		"class_label",
+		"latitude",
+		"longitude",
+	]
+	_unique_keys = [c for c in _unique_keys if c in filtered.columns]
+	unique_df = filtered.copy()
+	if len(_unique_keys) > 0 and not unique_df.empty:
+		unique_df = unique_df.drop_duplicates(subset=_unique_keys, keep="last")
+
+	# Keep a concise set of columns for readability if present
+	_display_cols = [
+		"media_name",
+		"timestamp",
+		"date",
+		"timestamp_iso",
+		"source",
+		"class_label",
+		"latitude",
+		"longitude",
+		"confidence",
+	]
+	_display_cols = [c for c in _display_cols if c in unique_df.columns]
+	preview = (unique_df[_display_cols] if len(_display_cols) > 0 else unique_df).tail(200)
+	preview = preview.reset_index(drop=True)
+	preview.index.name = "index_p5"
 	st.dataframe(preview, use_container_width=True)
 
 	colD, colE = st.columns(2)
